@@ -53,7 +53,7 @@ src/
 `Expense` regroupe les champs communs (`id`, `amount`, `date`, `description`, `category`) et déclare les méthodes abstraites que chaque sous-classe est obligée d'implémenter.
 
 ### Interfaces
-- **`Alertable`** — implémentée par `Budget`. Définit `checkAlert()` : avertissement à 80% du budget, exception à 100%.
+- **`Alertable`** — implémentée par `Budget`. Définit `checkAlert()` .
 - **`Exportable`** — implémentée par `ReportExporter`. Définit `exportToFile(String path)` pour la génération de rapports.
 
 ### Exceptions personnalisées
