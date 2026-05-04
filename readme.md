@@ -114,4 +114,4 @@ java -cp out Main
 ## 📄 Diagramme UML
 
 Le diagramme de classes est disponible à la racine du projet : `diagramme_de_classe.png`
-![Diagramme de classes](src/diagramme_de_classe.png)
+![Diagramme de classes](diagramme_de_classe.png)
