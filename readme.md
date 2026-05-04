@@ -1,266 +1,116 @@
-\# 💸 Student Budget Tracker
+# Student Budget Tracker
 
+Application console Java développée dans le cadre du cours de **Programmation Orientée Objet**.  
+Elle permet à un étudiant de suivre ses dépenses quotidiennes par catégorie, de définir des budgets mensuels, de recevoir des alertes en cas de dépassement, et d'exporter des rapports mensuels.
 
+---
 
-A Java console application that helps students track daily expenses by category, set monthly budgets, receive alerts when nearing spending limits, and export monthly reports — built as a university OOP project.
+## Contexte
 
+Projet réalisé en réponse à la fiche projet POO — développement d'une application console Java sans interface graphique, mettant en œuvre les concepts fondamentaux de la POO : héritage, polymorphisme, interfaces, exceptions personnalisées, collections et persistance fichier.
 
+---
 
-\---
+## Architecture
 
-
-
-\## 📌 Problem Statement
-
-
-
-Students often lose track of their spending throughout the month and overspend without realizing it until it's too late. This app provides a simple, structured way to log expenses by category, monitor budgets in real time, and review spending habits through monthly reports.
-
-
-
-\---
-
-
-
-\## ✨ Features
-
-
-
-\- \*\*Register / login\*\* as a student user
-
-\- \*\*Add, edit, and delete expenses\*\* across categories (Food, Transport, Academic, Entertainment)
-
-\- \*\*Set monthly budgets\*\* per category
-
-\- \*\*Real-time alerts\*\* when spending approaches or exceeds a budget limit
-
-\- \*\*Search expenses\*\* by keyword (case-insensitive, matches title or description)
-
-\- \*\*Sort and filter\*\* expenses by date or category
-
-\- \*\*Export monthly reports\*\* to a formatted `.csv` file
-
-\- \*\*Persist all data\*\* to CSV files — loaded on startup, saved on exit
-
-
-
-\---
-
-
-
-\## 🏗️ Project Structure
-
-
+Le projet suit une architecture modulaire avec séparation claire des responsabilités :
 
 ```
-
 src/
-
 ├── model/
-
-│   ├── Expense.java              ← abstract base class
-
+│   ├── Expense.java                  ← classe abstraite
 │   ├── FoodExpense.java
-
 │   ├── TransportExpense.java
-
 │   ├── AcademicExpense.java
-
 │   ├── EntertainmentExpense.java
-
-│   ├── Budget.java               ← implements Alertable
-
+│   ├── Budget.java                   ← implements Alertable
 │   └── Student.java
-
 ├── interfaces/
-
 │   ├── Alertable.java
-
 │   └── Exportable.java
-
 ├── exceptions/
-
-│   ├── InvalidAmountException.java
-
 │   ├── BudgetExceededException.java
-
 │   ├── ExpenseNotFoundException.java
-
+│   ├── InvalidAmountException.java
 │   └── FileIOException.java
-
 ├── service/
-
 │   └── ExpenseManager.java
-
 ├── persistence/
-
 │   └── FileManager.java
-
 ├── export/
-
-│   └── ReportExporter.java       ← implements Exportable
-
-└── Main.java                     ← console menu loop
-
+│   └── ReportExporter.java           ← implements Exportable
+└── Main.java
 ```
 
+---
 
+## Concepts POO utilisés
 
-\---
+### Héritage & Polymorphisme
+`Expense` est une classe abstraite. `FoodExpense`, `TransportExpense`, `AcademicExpense` et `EntertainmentExpense` en héritent et redéfinissent chacune `getSummary()`, `validate()` et `toCSV()`. L'`ExpenseManager` manipule toutes ces sous-classes via le type `Expense` — polymorphisme pur.
 
+### Classes abstraites
+`Expense` regroupe les champs communs (`id`, `amount`, `date`, `description`, `category`) et déclare les méthodes abstraites que chaque sous-classe est obligée d'implémenter.
 
+### Interfaces
+- **`Alertable`** — implémentée par `Budget`. Définit `checkAlert()` : avertissement à 80% du budget, exception à 100%.
+- **`Exportable`** — implémentée par `ReportExporter`. Définit `exportToFile(String path)` pour la génération de rapports.
 
-\## 🧠 OOP Concepts Used
+### Exceptions personnalisées
 
+| Exception | Type | Déclenchée quand |
+|-----------|------|-----------------|
+| `BudgetExceededException` | Checked | Les dépenses dépassent la limite |
+| `InvalidAmountException` | Checked | Montant invalide (≤ 0 ou hors plage) |
+| `ExpenseNotFoundException` | Unchecked | ID introuvable lors d'un edit/delete |
+| `FileIOException` | Unchecked | Erreur de lecture/écriture fichier |
 
+### Collections
+`ExpenseManager` utilise une `List<Expense>` pour stocker les dépenses et une `Map<String, Budget>` (clé = catégorie) pour un accès instantané aux budgets.
 
-| Concept | Where it's applied |
+### Persistance fichier
+`FileManager` lit et écrit trois fichiers CSV (`expenses.csv`, `budgets.csv`, `students.csv`) via `BufferedReader` et `PrintWriter`. Chaque entité sait se sérialiser via `toCSV()` et se reconstruire via `fromCSV()`.
 
-|---|---|
+### Traitement de chaînes
+- `String.split(",")` et `String.trim()` pour parser les CSV
+- `String.format()` pour l'alignement des colonnes dans les rapports
+- `String.toLowerCase().contains()` pour la recherche insensible à la casse
 
-| \*\*Abstract class\*\* | `Expense` — abstract with `getSummary()` and `validate()` |
+---
 
-| \*\*Inheritance \& Polymorphism\*\* | `FoodExpense`, `TransportExpense`, etc. extend `Expense` and override `getSummary()` |
+## Fonctionnalités
 
-| \*\*Interfaces\*\* | `Alertable` (implemented by `Budget`), `Exportable` (implemented by `ReportExporter`) |
+- Ajouter, modifier, supprimer et afficher des dépenses
+- Filtrer par catégorie ou par mois
+- Rechercher par mot-clé dans la description
+- Définir un budget mensuel par catégorie
+- Recevoir une alerte à 80% du budget, exception à 100%
+- Exporter un rapport mensuel formaté dans un fichier texte
+- Sauvegarde et chargement automatiques au démarrage/fermeture
 
-| \*\*Custom Exceptions\*\* | `InvalidAmountException`, `BudgetExceededException`, `ExpenseNotFoundException`, `FileIOException` |
+---
 
-| \*\*Collections\*\* | `ArrayList<Expense>` for all expenses, `HashMap<String, Budget>` keyed by category |
+## Répartition du travail
 
-| \*\*File Persistence\*\* | `FileManager` reads/writes `expenses.csv`, `budgets.csv`, `students.csv` via `BufferedReader`/`PrintWriter` |
+| Membre | Couche | Fichiers |
+|--------|--------|----------|
+| 1 | Modèle | `Expense.java` + 4 sous-classes |
+| 2 | Interfaces & Exceptions | `Alertable`, `Exportable`, `Budget`, 4 exceptions |
+| 3 | Service | `ExpenseManager`, `Student` |
+| 4 | Persistance & Export | `FileManager`, `ReportExporter` |
+| 5 | Point d'entrée | `Main.java` |
 
-| \*\*String Handling\*\* | `split(",")`, `trim()`, `toLowerCase()`, `contains()`, `String.format()` used in parsing, search, and report formatting |
+---
 
+## Lancer l'application
 
+```bash
+javac -d out src/**/*.java
+java -cp out Main
+```
 
-\---
+---
 
+## 📄 Diagramme UML
 
-
-\## 📁 Data Files
-
-
-
-| File | Contents |
-
-|---|---|
-
-| `expenses.csv` | `id, type, amount, date, description, category, ...` |
-
-| `budgets.csv` | `category, limit, month` |
-
-| `students.csv` | `id, name, email` |
-
-
-
-All entities implement a `toCSV()` method for serialization. On startup, `FileManager.loadExpenses()` reconstructs the correct subtype from the `type` column.
-
-
-
-\---
-
-
-
-\## 👥 Team Split (5 members)
-
-
-
-| Member | Responsibility |
-
-|---|---|
-
-| \*\*Member 1\*\* | `model/` — `Expense` (abstract), all 4 subclasses, `Student.java` |
-
-| \*\*Member 2\*\* | `interfaces/` + `exceptions/` — `Alertable`, `Exportable`, and all 4 custom exceptions |
-
-| \*\*Member 3\*\* | `service/ExpenseManager.java` + `Budget.java` — CRUD logic, sorting, search, budget tracking |
-
-| \*\*Member 4\*\* | `persistence/FileManager.java` + `export/ReportExporter.java` — CSV read/write and report formatting |
-
-| \*\*Member 5\*\* | `Main.java` — console menu loop, Scanner input, try/catch wiring, integration |
-
-
-
-> \*\*Build order:\*\* Members 1 \& 2 start in parallel → Member 3 follows → Member 4 follows → Member 5 integrates last.
-
-
-
-\---
-
-
-
-\## 🤝 Team Contracts
-
-
-
-Before writing code, agree on these shared contracts (document in `CONTRACTS.md`):
-
-
-
-1\. \*\*CSV column order\*\* for `expenses.csv` — so `toCSV()` matches the parser
-
-2\. \*\*Exact exception class names\*\* — so `throws` clauses match across members
-
-3\. \*\*`ExpenseManager` method signatures\*\* — so `Main.java` calls compile correctly
-
-
-
-\---
-
-
-
-\## 🚀 How to Run
-
-
-
-1\. Clone the repository
-
-2\. Compile all `.java` files:
-
-&#x20;  ```bash
-
-&#x20;  javac -d out src/\*\*/\*.java src/Main.java
-
-&#x20;  ```
-
-3\. Run the app:
-
-&#x20;  ```bash
-
-&#x20;  java -cp out Main
-
-&#x20;  ```
-
-4\. Follow the console menu to register, add expenses, set budgets, and export reports.
-
-
-
-> Data is automatically loaded from CSV files on startup and saved on exit.
-
-
-
-\---
-
-
-
-\## 📋 Requirements
-
-
-
-\- Java 11 or higher
-
-\- No external libraries — standard Java only
-
-
-
-\---
-
-
-
-\## 📄 License
-
-
-
-This project was developed as part of a university Java OOP course. Free to use and adapt for educational purposes.
-
+Le diagramme de classes est disponible à la racine du projet : `diagramme_de_classe.png`
