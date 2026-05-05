@@ -1,0 +1,31 @@
+# Diagramme d'État de Transition
+
+Voici votre diagramme rendu :
+
+```mermaid
+stateDiagram-v2
+    [*] --> Saisie : Nouvel ajout (Main menu)
+    
+    Saisie --> Validation : Entrée des données (montant, catégorie)
+    
+    Validation --> Saisie : InvalidAmountException (Montant <= 0)
+    note right of Validation : Vérification des types et valeurs
+    
+    Validation --> VérificationBudget : Données valides
+    
+    state VérificationBudget {
+        [*] --> AnalyseSeuil
+        AnalyseSeuil --> Alerte : Dépenses > 80% limite
+        AnalyseSeuil --> Bloqué : BudgetExceededException (> 100%)
+        AnalyseSeuil --> Conforme : < 80%
+    }
+    
+    VérificationBudget --> Enregistré : Succès (Ajout à la Liste)
+    Bloqué --> Saisie : Rectification du montant
+    
+    Enregistré --> Persistant : Sauvegarde (FileManager)
+    Persistant --> Modifié : Edition (ID trouvé)
+    Modifié --> Validation : Re-validation des données
+    
+    Persistant --> [*] : Suppression / Fermeture app
+```
