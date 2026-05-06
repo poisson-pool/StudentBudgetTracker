@@ -48,6 +48,8 @@ public class FoodExpense extends Expense {
         if (limit > 0) {
             maxLimit = limit;
             System.out.println("OK: food limit set to " + limit + " MAD");
+        } else {
+            System.out.println("Warning: invalid limit. Keeping " + maxLimit + " MAD");
         }
     }
 
