@@ -2,40 +2,29 @@ package model;
 
 import exceptions.InvalidAmountException;
 
-/**
- * EntertainmentExpense - entertainment expense.
- */
 public class EntertainmentExpense extends Expense {
-
+    // les attributs
     private String activityType;
     private static double maxLimit = 400;
 
-    /**
-     * Creates an entertainment expense.
-     */
+    //Constructeur
     public EntertainmentExpense(int id, double amount, String date, String description,
                                 String category, String activityType) {
         super(id, amount, date, description, category);
         this.activityType = activityType;
     }
 
-    /**
-     * Returns the activity type.
-     */
+    //Getters & setters
     public String getActivityType() {
         return activityType;
     }
-
-    /**
-     * Updates the activity type.
-     */
     public void setActivityType(String activityType) {
         this.activityType = activityType;
     }
 
-    /**
-     * Sets the shared entertainment limit.
-     */
+    public static double getMaxLimit() {
+        return maxLimit;
+    }
     public static void setMaxLimit(double limit) {
         if (limit > 0) {
             maxLimit = limit;
@@ -45,16 +34,7 @@ public class EntertainmentExpense extends Expense {
         }
     }
 
-    /**
-     * Returns the shared entertainment limit.
-     */
-    public static double getMaxLimit() {
-        return maxLimit;
-    }
-
-    /**
-     * Validates the expense amount and activity type.
-     */
+    //Validation
     @Override
     public void validate() throws InvalidAmountException {
         if (amount <= 0) {
@@ -72,9 +52,7 @@ public class EntertainmentExpense extends Expense {
         }
     }
 
-    /**
-     * Returns a readable summary.
-     */
+    //Resume
     @Override
     public String getSummary() {
         return String.format(
@@ -83,9 +61,7 @@ public class EntertainmentExpense extends Expense {
         );
     }
 
-    /**
-     * Converts the expense to CSV.
-     */
+    //Serialisation - commun entre les classes
     @Override
     public String toCSV() {
         return String.format("%d,ENTERTAINMENT,%.2f,%s,%s,%s,%s",
