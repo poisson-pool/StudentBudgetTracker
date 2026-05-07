@@ -1,18 +1,14 @@
 package model;
 
-/**
- * Represents a student user of the budget tracker.
- * Stores identity info and monthly income for budget context.
- */
-public class Student {
 
-    // ── Fields ──────────────────────────────────────────────────────────────
+public class Student {
+    // les attributs
     private String id;
     private String name;
     private String email;
     private double monthlyIncome;
 
-    // ── Constructor ──────────────────────────────────────────────────────────
+    //Constructeur
     public Student(String id, String name, String email, double monthlyIncome) {
         this.id = id;
         this.name = name;
@@ -20,7 +16,7 @@ public class Student {
         this.monthlyIncome = monthlyIncome;
     }
 
-    // ── Getters & Setters ────────────────────────────────────────────────────
+    //Getters & Setters
     public String getId() { return id; }
 
     public String getName() { return name; }
@@ -32,21 +28,10 @@ public class Student {
     public double getMonthlyIncome() { return monthlyIncome; }
     public void setMonthlyIncome(double monthlyIncome) { this.monthlyIncome = monthlyIncome; }
 
-    // ── Serialization ────────────────────────────────────────────────────────
-
-    /**
-     * Converts this student to a CSV line.
-     * Format: id,name,email,monthlyIncome
-     * Used by FileManager (Member 4) to persist data.
-     */
+    //Serialisation - commun entre les classes
     public String toCSV() {
         return String.join(",", id, name, email, String.valueOf(monthlyIncome));
     }
-
-    /**
-     * Reconstructs a Student from a CSV line.
-     * Inverse of toCSV().
-     */
     public static Student fromCSV(String csvLine) {
         // String handling: split on comma, trim each field
         String[] parts = csvLine.split(",");
@@ -57,7 +42,7 @@ public class Student {
         return new Student(id, name, email, monthlyIncome);
     }
 
-    // ── Display ──────────────────────────────────────────────────────────────
+    //Optionelle - En cas d'affichage direct
     @Override
     public String toString() {
         return String.format("Student[id=%s | name=%s | email=%s | income=%.2f MAD]",
