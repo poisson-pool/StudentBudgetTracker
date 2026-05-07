@@ -1,5 +1,3 @@
-package app;
-
 import exceptions.BudgetExceededException;
 import exceptions.ExpenseNotFoundException;
 import exceptions.FileIOException;
@@ -28,21 +26,23 @@ public class App {
     private static final String TITLE_COLOR = "\033[1;33m";
     private static final String RESET = "\033[0m";
     private static final String[] WALLET_ART = new String[] {
-        "        -=",
-        "      -******",
-        "   -***********",
-        " -****************",
-        "+******************",
-        "+******************",
-        "+*****        *****+",
-        "+*****        *****+",
-        "+******************",
-        " :................:"
+        "              . - - - - .               ",
+        "            .'            \\            ",
+        " . - - - - - - - - - - - - .           ",
+        " | . - - - - - - - - - - . |           ",
+        " | |                     | |           ",
+        " | |         . - - - .   | |           ",
+        " | |        ( .  +  . )  | |           ",
+        " | |         ' - - - '   | |           ",
+        " | |                     | |           ",
+        " | ' - - - - - - - - - - ' |           ",
+        " ' - - - - - - - - - - - - '           "
     };
+
     private static final String[] NAME_ART = new String[] {
-        "   __  __      _ _       __      ____     __ ",
-        "  / / / /___  (_) |     / /___ _/ / /__  / /_",
-        " / / / / __ \\/ /| | /| / / __ `/ / / _ \\/ __/",
+        "    __  __      _ _       __      ____     __ ",
+        "   / / / /___  (_) |     / /___ _/ / /__  / /_",
+        "  / / / / __ \\/ /| | /| / / __ `/ / / _ \\/ __/",
         "/ /_/ / / / / / | |/ |/ / /_/ / / /  __/ /_  ",
         "\\____/_/ /_/_/  |__/|__/\\__,_/_/_/\\___/\\__/  "
     };
