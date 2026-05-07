@@ -27,10 +27,7 @@
  * @version 1.0
  */
 
-
-
 package model;
-
 
 import exceptions.InvalidAmountException;
 
@@ -43,7 +40,6 @@ public abstract class Expense {
     protected String category;
     
     // Constructeurs
-
     public Expense(int id, double amount, String date, String description, String category) {
         this.id = id;
         this.amount = amount;
@@ -56,19 +52,15 @@ public abstract class Expense {
     public int getId() {
         return id;
     }
-    
     public double getAmount() {
         return amount;
     }
-    
     public String getDate() {
         return date;
     }
-    
     public String getDescription() {
         return description;
     }
-    
     public String getCategory() {
         return category;
     }
@@ -77,19 +69,15 @@ public abstract class Expense {
     public void setId(int id) {
         this.id = id;
     }
-    
     public void setAmount(double amount) {
         this.amount = amount;
     }
-    
     public void setDate(String date) {
         this.date = date;
     }
-    
     public void setDescription(String description) {
         this.description = description;
     }
-    
     public void setCategory(String category) {
         this.category = category;
     }
