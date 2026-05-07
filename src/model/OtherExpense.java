@@ -2,40 +2,27 @@ package model;
 
 import exceptions.InvalidAmountException;
 
-/**
- * OtherExpense - other expense category.
- */
 public class OtherExpense extends Expense {
-
+    // les attributs
     private String subType;
     private static double maxLimit = 1000;
 
-    /**
-     * Creates an other expense.
-     */
+    //Constructeur
     public OtherExpense(int id, double amount, String date, String description,
                         String category, String subType) {
         super(id, amount, date, description, category);
         this.subType = subType;
     }
 
-    /**
-     * Returns the subtype.
-     */
+    //Getters & Setters
     public String getSubType() {
         return subType;
     }
-
-    /**
-     * Updates the subtype.
-     */
     public void setSubType(String subType) {
         this.subType = subType;
     }
 
-    /**
-     * Sets the shared other-expense limit.
-     */
+    public static double getMaxLimit() { return maxLimit; }
     public static void setMaxLimit(double limit) {
         if (limit > 0) {
             maxLimit = limit;
@@ -45,16 +32,7 @@ public class OtherExpense extends Expense {
         }
     }
 
-    /**
-     * Returns the shared other-expense limit.
-     */
-    public static double getMaxLimit() {
-        return maxLimit;
-    }
-
-    /**
-     * Validates the expense amount and subtype.
-     */
+    //Validation
     @Override
     public void validate() throws InvalidAmountException {
         if (amount <= 0) {
@@ -72,9 +50,7 @@ public class OtherExpense extends Expense {
         }
     }
 
-    /**
-     * Returns a readable summary.
-     */
+    //Resume
     @Override
     public String getSummary() {
         return String.format(
@@ -83,9 +59,7 @@ public class OtherExpense extends Expense {
         );
     }
 
-    /**
-     * Converts the expense to CSV.
-     */
+    //Serialisation - commun entre les classes
     @Override
     public String toCSV() {
         return String.format("%d,OTHER,%.2f,%s,%s,%s,%s",
