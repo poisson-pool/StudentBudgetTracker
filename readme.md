@@ -213,8 +213,9 @@ src/
 ## Lancer l'application
 
 ```bash
-javac -d out src/**/*.java
-java -cp out app.App
+cd src/ 
+java App.java
+
 ```
 
 > **Requis :** JDK 14 ou supérieur.
