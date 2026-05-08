@@ -48,8 +48,8 @@ src/
 │   └── FileManager.java
 ├── export/
 │   └── ReportExporter.java           ← implements Exportable
-└── app/
-    └── App.java                      ← Point d'entrée principal : [main]
+└── App.java                          ← Point d'entrée principal : [main]
+    
 ```
 
 ---
