@@ -237,7 +237,7 @@ java -cp out app.App
 
 > *Elaboré par:*
 >
-> - **Ahrabar Ahmed mounir** — `@Ahmedahrabar-hub`
+> - **Ahrabar Ahmed monir** — `@Ahmedahrabar-hub`
 > - **Faiz Adnane** — `@Mazicus`
 > - **Sbia Youness** — `@Lamprofony`
 > - **Telouani Amine** — `@atel12345`
