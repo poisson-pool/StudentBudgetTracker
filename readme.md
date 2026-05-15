@@ -8,23 +8,37 @@ Elle permet à un étudiant de suivre ses dépenses quotidiennes par catégorie,
 
 ## Contexte
 
-Projet réalisé en réponse à la fiche projet POO développement d'une application console Java sans interface graphique, mettant en œuvre les concepts fondamentaux de la POO : héritage, polymorphisme, interfaces, exceptions personnalisées, collections et persistance fichier.
+Projet réalisé en réponse à la fiche projet POO développement d'une application console Java sans interface graphique, mettant en œuvre les concepts fondamentaux de la POO : héritage, polymorphisme, encapsulation, abstraction et interfaces.
 
 ---
 
 ## Diagrammes UML
 
-![Class Diagram](./UML_diagrammes/CLASS%20-%20Uniwallet.png)
+<details>
+<summary>Diagramme de classes (UML)</summary>
+
+![Diagramme de classes](./UML_diagrammes/CLASS%20-%20Uniwallet.png)
+
+</details>
 
 <details>
-<summary>📋 Use Case</summary>
+<summary>Diagramme de classes (version initiale — générée depuis le code)</summary>
+
+Ce schéma correspond à la première version obtenue lors de la transformation du code vers un diagramme.
+
+<img width="2895" height="1499" alt="Diag_class_StudentBudgetTracker" src="https://github.com/user-attachments/assets/da50b561-0b66-4728-ab1c-b5b63f39c845" />
+
+</details>
+
+<details>
+<summary>Diagramme de cas d'utilisation</summary>
 
 ![Use Case](./UML_diagrammes/USE%20CASE.png)
 
 </details>
 
 <details>
-<summary>🔄 Sequence Diagrams</summary>
+<summary>Diagrammes de séquence</summary>
 
 ![Ajouter une dépense](./UML_diagrammes/SEQUENCE%20-%20Ajouter%20une%20depense.png)
 ![Exporter le rapport](./UML_diagrammes/SEQUENCE%20-%20Exporter%20le%20rapport.png)
@@ -32,7 +46,7 @@ Projet réalisé en réponse à la fiche projet POO développement d'une applica
 </details>
 
 <details>
-<summary>⚡ Activity Diagrams</summary>
+<summary>Diagrammes d'activité</summary>
 
 ![Ajouter une dépense](./UML_diagrammes/ACTIVITE%20-%20Ajouter%20une%20depense.png)
 ![Générer le rapport](./UML_diagrammes/ACTIVITE%20-%20Generer%20le%20rapport.png)
@@ -40,12 +54,13 @@ Projet réalisé en réponse à la fiche projet POO développement d'une applica
 </details>
 
 <details>
-<summary>🔁 State Diagrams</summary>
+<summary>Diagrammes d'état</summary>
 
 ![Budget](./UML_diagrammes/ETAT%20-%20budget.png)
 ![Dépense](./UML_diagrammes/ETAT%20-%20depense.png)
 
 </details>
+
 ---
 
 ## Environnement de développement
@@ -94,10 +109,10 @@ src/
 ## Concepts POO utilisés
 
 ### Héritage & Polymorphisme
-`Expense` est une classe abstraite. `FoodExpense`, `TransportExpense`, `EntertainmentExpense` et `OtherExpense` en héritent et redéfinissent chacune `getSummary()`, `validate()` et `toCSV()`. L'`ExpenseManager` manipule toutes ces sous-classes via le type `Expense` polymorphisme pur.
+`Expense` est une classe abstraite. `FoodExpense`, `TransportExpense`, `EntertainmentExpense` et `OtherExpense` en héritent et redéfinissent chacune `getSummary()`, `validate()` et `toCSV()`.
 
 ### Classes abstraites
-`Expense` regroupe les champs communs (`id` : int, `amount`, `date`, `description`, `category`) et déclare les méthodes abstraites que chaque sous-classe est obligée d'implémenter : `validate()`, `getSummary()`, `toCSV()` et `toString()`.
+`Expense` regroupe les champs communs (`id` : int, `amount`, `date`, `description`, `category`) et déclare les méthodes abstraites que chaque sous-classe est obligée d'implémenter : `validate()`, `getSummary()` et `toCSV()`.
 
 ### Interfaces
 - **`Alertable`** implémentée par `Budget`. Définit `checkAlert()`.
@@ -118,7 +133,7 @@ src/
 - `Map<String, Budget>` (clé = catégorie) pour un accès instantané aux budgets.
 
 ### Persistance fichier
-`FileManager` lit et écrit trois fichiers CSV (`expenses.csv`, `budgets.csv`, `students.csv`) via `BufferedReader` et `PrintWriter`. Chaque entité sait se sérialiser via `toCSV()` et se reconstruire via `fromCSV()`.
+`FileManager` lit et écrit trois fichiers CSV (`expenses.csv`, `budgets.csv`, `students.csv`) via `BufferedReader` et `PrintWriter`. Chaque entité sait se sérialiser via `toCSV()` et se reconstruire via des méthodes de parsing.
 
 ### Traitement de chaînes
 - `String.split(",")` et `String.trim()` pour parser les CSV
@@ -202,7 +217,7 @@ src/
 
 **`Budget` (implements `Alertable`)**
 - Champs : `-category : String`, `-limit : double`, `-month : String`, `-currentSpending : double`
-- Méthodes : `getCategory()`, `setCategory()`, `getLimit()`, `setLimit()`, `getCurrentSpending()`, `setCurrentSpending()`, `getMonth()`, `setMonth()`, `addSpent(amount: double)`, `getSpent()`, `checkAlert()`, `toCSV()`, `fromCSV(line: String) : Budget`
+- Méthodes : `getCategory()`, `setCategory()`, `getLimit()`, `setLimit()`, `getCurrentSpending()`, `setCurrentSpending()`, `getMonth()`, `setMonth()`, `addSpent(amount: double)`, `getSpent()`, `checkAlert()`
 
 **`Student`**
 - Champs : `-id : String`, `-name : String`, `-email : String`, `-monthlyIncome : double`
@@ -212,18 +227,18 @@ src/
 
 **`ExpenseManager`**
 - Champs : `-expenses : List<Expense>`, `-budgets : Map<String, Budget>`
-- Méthodes : `addExpense(expense: Expense)`, `deleteExpense(id: String)`, `editExpenseId(id: String, newDescription: String, newAmount: double)`, `listAll()`, `filterByCategory(category: String) : List<Expense>`, `filterByMonth(month: String, year: int) : List<Expense>`, `searchKeyword(keyword: String) : List<Expense>`, `sortByDate()`, `sortByAmount()`, `setBudget(category: String, limit: double, month: int, year: int)`, `listBudgets()`, `totalForMonth(month: int, year: int) : double`, `mostExpensive() : Expense`, `getAllExpenses() : List<Expense>`, `setExpenses(loaded: List<Expense>)`, `getBudgets() : Map<String, Budget>`, `findById(id: String) : Expense`
+- Méthodes : `addExpense(expense: Expense)`, `deleteExpense(id: String)`, `editExpenseId(id: String, newDescription: String, newAmount: double)`, `listAll()`, `filterByCategory(category: String) : List<Expense>`
 
 ### Persistance (`persistence/`)
 
 **`FileManager`**
-- Méthodes : `saveExpenses(expenses: List<Expense>, path: String)`, `loadExpenses(path: String) : List<Expense>`, `saveBudgets(budgets: Map<String, Budget>, path: String)`, `loadBudgets(path: String) : Map<String, Budget>`, `saveStudent(student: Student, path: String)`, `loadStudent(path: String) : Student`, `ensureParentDirectory(file: File)`
+- Méthodes : `saveExpenses(expenses: List<Expense>, path: String)`, `loadExpenses(path: String) : List<Expense>`, `saveBudgets(budgets: Map<String, Budget>, path: String)`, `loadBudgets(path: String) : Map<String, Budget>`
 
 ### Export (`export/`)
 
 **`ReportExporter` (implements `Exportable`)**
 - Champs : `-manager : ExpenseManager`
-- Méthodes : `ReportExporter(manager: ExpenseManager)`, `exportToFile(path: String)`, `formatRow(expense: Expense) : String`, `generateMonthlyReport(month: int, year: int, path: String)`, `printToConsole(list: List<Expense>)`, `writeReport(expenses: List<Expense>, writer: PrintWriter)`, `ensureParentDirectory(file: File)`
+- Méthodes : `ReportExporter(manager: ExpenseManager)`, `exportToFile(path: String)`, `formatRow(expense: Expense) : String`, `generateMonthlyReport(month: int, year: int, path: String)`, `printToConsole()`
 
 ### Point d'entrée (`app/`)
 
@@ -280,10 +295,3 @@ java App.java
 > - **Sbia Youness** — `@Lamprofony`
 > - **Telouani Amine** — `@atel12345`
 > - **Toukam Abderrahman** — `@beeOverflow`
-
----
-
-## Diagramme UML
-
-Le diagramme de classes est disponible à la racine du projet : `diagramme_de_classe.png`
-<img width="2895" height="1499" alt="Diag_class_StudentBudgetTracker" src="https://github.com/user-attachments/assets/da50b561-0b66-4728-ab1c-b5b63f39c845" />
