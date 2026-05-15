@@ -1,3 +1,9 @@
+# Video demo
+
+https://github.com/user-attachments/assets/a340420b-9461-4b5a-8b46-22bc98aab9ad
+
+---
+
 # UniWallet
 ### Student Budget Tracker
 
