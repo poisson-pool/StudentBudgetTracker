@@ -12,6 +12,42 @@ Projet réalisé en réponse à la fiche projet POO développement d'une applica
 
 ---
 
+## Diagrammes UML
+
+![Class Diagram](./UML_diagrammes/CLASS%20-%20Uniwallet.png)
+
+<details>
+<summary>📋 Use Case</summary>
+
+![Use Case](./UML_diagrammes/USE%20CASE.png)
+
+</details>
+
+<details>
+<summary>🔄 Sequence Diagrams</summary>
+
+![Ajouter une dépense](./UML_diagrammes/SEQUENCE%20-%20Ajouter%20une%20depense.png)
+![Exporter le rapport](./UML_diagrammes/SEQUENCE%20-%20Exporter%20le%20rapport.png)
+
+</details>
+
+<details>
+<summary>⚡ Activity Diagrams</summary>
+
+![Ajouter une dépense](./UML_diagrammes/ACTIVITE%20-%20Ajouter%20une%20depense.png)
+![Générer le rapport](./UML_diagrammes/ACTIVITE%20-%20Generer%20le%20rapport.png)
+
+</details>
+
+<details>
+<summary>🔁 State Diagrams</summary>
+
+![Budget](./UML_diagrammes/ETAT%20-%20budget.png)
+![Dépense](./UML_diagrammes/ETAT%20-%20depense.png)
+
+</details>
+---
+
 ## Environnement de développement
 
 | Outil | Version / Détail |
